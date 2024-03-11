@@ -1,6 +1,9 @@
 import classNames from 'classnames'
 import { useMemo } from 'react'
 
+// 账单类型的中文适配
+import { billTypeToName } from '@/constants'
+
 import './index.scss'
 
 const DailyBill = ({date, billList}) => {
@@ -32,6 +35,21 @@ const DailyBill = ({date, billList}) => {
                         <span className="money">{balances.toFixed(2)}</span>
                     </div>
                 </div>
+            </div>
+            {/* 单日列表 */}
+            <div className="billList">
+                {billList.map(item => {
+                    return (
+                        <div className="bill" key={item.id}>
+                            <div className="detail">
+                                <div className="billType">{billTypeToName[item.useFor]}</div>
+                            </div>
+                            <div className={classNames('money', item.type)}>
+                                {item.money.toFixed(2)}
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )
