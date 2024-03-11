@@ -7,8 +7,13 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import { useSelector } from 'react-redux'
 import _ from 'lodash'
+import { nanoid } from 'nanoid'
+
+// 每日账单组件
+import DailyBill from './DailyBill'
 
 import './index.scss'
+import dailyBill from "./DailyBill";
 
 const Month = () => {
     // 展示日期选择器的标记
@@ -27,7 +32,7 @@ const Month = () => {
     // 当前月的账单列表
     const [currentMonthBillList, setCurrentMonthBillList] = useState([])
 
-    // 组件挂载时调用
+    // 当前月的账单的初始化数据
     useEffect(() => {
         if (monthGroup[date]) {
             // 当前月的账单列表的默认值
@@ -60,6 +65,9 @@ const Month = () => {
         // 关闭弹窗
         setIsShowDatePicker(false)
     }
+
+    // 以日分组的当月月账单
+    const dayGroup = useMemo(() => _.groupBy(currentMonthBillList, dailyBill => dayjs(dailyBill.date).format("MM-DD")), [currentMonthBillList])
 
     return (
         <div className="monthlyBill">
@@ -102,6 +110,11 @@ const Month = () => {
                         onClose={() => setIsShowDatePicker(false)}
                     />
                 </div>
+                {
+                    Object.keys(dayGroup).map(key => (
+                        <DailyBill key={nanoid()} date={key} billList={dayGroup[key]}/>
+                    ))
+                }
             </div>
         </div>
     )
