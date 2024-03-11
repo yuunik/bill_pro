@@ -4,12 +4,24 @@ import {
 } from 'antd-mobile'
 import { useState } from 'react'
 import classNames from 'classnames'
+import dayjs from 'dayjs'
 
 import './index.scss'
 
 const Month = () => {
     // 展示日期选择器的标记
     const [isShowDatePicker, setIsShowDatePicker] = useState(false)
+    // 当前年份
+    const [date, setDate] = useState(() => dayjs().format("YYYY | M"))
+
+    // 选择日期
+    const selectDate = (value) => {
+        const selectedDate = dayjs(value).format("YYYY | M")
+        // 修改账单日期
+        setDate(selectedDate)
+        // 关闭弹窗
+        setIsShowDatePicker(false)
+    }
 
     return (
         <div className="monthlyBill">
@@ -21,7 +33,7 @@ const Month = () => {
                     {/* 时间切换区域 */}
                     <div className="date" onClick={() => setIsShowDatePicker(true)}>
                         <span className="text">
-                          2023 | 3月账单
+                          {date}月账单
                         </span>
                         <span className={classNames('arrow', {expand: isShowDatePicker})}></span>
                     </div>
@@ -47,7 +59,7 @@ const Month = () => {
                         precision="month"
                         visible={isShowDatePicker}
                         max={new Date()}
-                        onConfirm={() => setIsShowDatePicker(false)}
+                        onConfirm={ selectDate }
                         onCancle={() => setIsShowDatePicker(false)}
                         onClose={() => setIsShowDatePicker(false)}
                     />
