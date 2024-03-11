@@ -3,11 +3,16 @@ import BillTypeIcon from '@/components/BillTypeIcon'
 import classNames from 'classnames'
 import { billListData } from '@/contants'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 import './index.scss'
 
 const New = () => {
     const navigate = useNavigate()
+
+    // 控制收入与支出的状态
+    const [billType, setBillType] = useState('pay')
+
     return (
         <div className="keepAccounts">
             <NavBar className="nav" onBack={() => navigate(-1)}>
@@ -18,12 +23,14 @@ const New = () => {
                 <div className="kaType">
                     <Button
                         shape="rounded"
-                        className={classNames('selected')}
+                        className={classNames({selected: billType === 'pay'})}
+                        onClick={() => setBillType('pay')}
                     >
                         支出
                     </Button>
                     <Button
-                        className={classNames('')}
+                        className={classNames({selected: billType === 'income'})}
+                        onClick={() => setBillType('income')}
                         shape="rounded"
                     >
                         收入
@@ -54,32 +61,34 @@ const New = () => {
             </div>
 
             <div className="kaTypeList">
-                {billListData['pay'].map(item => {
-                    return (
-                        <div className="kaType" key={item.type}>
-                            <div className="title">{item.name}</div>
-                            <div className="list">
-                                {item.list.map(item => {
-                                    return (
-                                        <div
-                                            className={classNames(
-                                                'item',
-                                                ''
-                                            )}
-                                            key={item.type}
+                {
+                    billListData[billType].map(item => {
+                        return (
+                            <div className="kaType" key={item.type}>
+                                <div className="title">{item.name}</div>
+                                <div className="list">
+                                    {item.list.map(item => {
+                                        return (
+                                            <div
+                                                className={classNames(
+                                                    'item',
+                                                    ''
+                                                )}
+                                                key={item.type}
 
-                                        >
-                                            <div className="icon">
-                                                <BillTypeIcon type={item.type} />
+                                            >
+                                                <div className="icon">
+                                                    <BillTypeIcon type={item.type} />
+                                                </div>
+                                                <div className="text">{item.name}</div>
                                             </div>
-                                            <div className="text">{item.name}</div>
-                                        </div>
-                                    )
-                                })}
+                                        )
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })
+                }
             </div>
 
             <div className="btns">
