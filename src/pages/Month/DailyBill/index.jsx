@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { useMemo, useState } from 'react'
 
 // 账单类型的中文适配
-import { billTypeToName } from '@/constants'
+import { billTypeToName } from 'src/contants'
 // 账单类型图标的组件
 import BillTypeIcon from '@/components/BillTypeIcon'
 
