@@ -2,9 +2,11 @@ import {
     NavBar,
     DatePicker
 } from 'antd-mobile'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
+import { useSelector } from 'react-redux'
+import _ from 'lodash'
 
 import './index.scss'
 
@@ -13,6 +15,13 @@ const Month = () => {
     const [isShowDatePicker, setIsShowDatePicker] = useState(false)
     // 当前年份
     const [date, setDate] = useState(() => dayjs().format("YYYY | M"))
+    // 获取 billStore 的状态管理库
+    const billState = useSelector(state => state.billState)
+
+    // 获取账单列表
+    const { billList } = billState
+
+    const newBillList = useMemo(() => _.groupBy(billList, (bill) => dayjs(bill.date).format("YYYY | M")) , [billList])
 
     // 选择日期
     const selectDate = (value) => {
