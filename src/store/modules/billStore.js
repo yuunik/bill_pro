@@ -25,7 +25,6 @@ const getBillList = () => {
         })
         // 设置账单
         dispatch(setBillList(result.data))
-        console.log(result.data)
     }
 }
 
