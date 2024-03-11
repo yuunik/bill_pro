@@ -1,8 +1,10 @@
 import classNames from 'classnames'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 // 账单类型的中文适配
 import { billTypeToName } from '@/constants'
+// 账单类型图标的组件
+import BillTypeIcon from '@/components/BillTypeIcon'
 
 import './index.scss'
 
@@ -14,12 +16,15 @@ const DailyBill = ({date, billList}) => {
     // 当日结余
     const balances = useMemo(() => pay + income, [pay, income])
 
+    // 控制账单列表的显隐
+    const [isShowBill, setIsShowBill] = useState(false)
+
     return (
         <div className={classNames('dailyBill')}>
             <div className="header">
                 <div className="dateIcon">
                     <span className="date">{date}</span>
-                    <span className={classNames('arrow')}></span>
+                    <span className={classNames('arrow', {expand: isShowBill})} onClick={() => setIsShowBill(!isShowBill)}></span>
                 </div>
                 <div className="oneLineOverview">
                     <div className="pay">
@@ -37,20 +42,28 @@ const DailyBill = ({date, billList}) => {
                 </div>
             </div>
             {/* 单日列表 */}
-            <div className="billList">
-                {billList.map(item => {
-                    return (
-                        <div className="bill" key={item.id}>
-                            <div className="detail">
-                                <div className="billType">{billTypeToName[item.useFor]}</div>
-                            </div>
-                            <div className={classNames('money', item.type)}>
-                                {item.money.toFixed(2)}
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
+            {
+                isShowBill
+                &&
+                <div className="billList">
+                    {
+                        billList.map(bill => {
+                            return (
+                                <div className="bill" key={bill.id}>
+                                    {/* 账单类型图标 */}
+                                    <BillTypeIcon type={bill.useFor}/>
+                                    <div className="detail">
+                                        <div className="billType">{billTypeToName[bill.useFor]}</div>
+                                    </div>
+                                    <div className={classNames('money', bill.type)}>
+                                        {bill.money.toFixed(2)}
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            }
         </div>
     )
 }

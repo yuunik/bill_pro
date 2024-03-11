@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { Provider} from 'react-redux'
 
-// 引入 App
-import App from '@/App'
 // 引入 router
 import router from '@/router'
 import store from '@/store'
