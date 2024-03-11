@@ -9,6 +9,9 @@ import App from '@/App'
 // 引入 router
 import router from '@/router'
 
+// 引入样式
+import '@/index.scss'
+
 const root = ReactDOM.createRoot(document.querySelector(".root"))
 root.render(
     <RouterProvider router={router}>
