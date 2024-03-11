@@ -60,7 +60,6 @@
   .twoLineOverview {
     display: flex;
     justify-content: space-between;
-    width: 250px;
 
     .item {
       display: flex;
@@ -71,6 +70,12 @@
         line-height: 24px;
         margin-bottom: 5px;
         font-size: 18px;
+
+        &::before {
+          content: "￥";
+          font-size: 14px;
+          color: #d21414;
+        }
       }
       .type {
         height: 14px;

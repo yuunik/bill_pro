@@ -2,7 +2,7 @@ import {
     NavBar,
     DatePicker
 } from 'antd-mobile'
-import { useState, useMemo } from 'react'
+import {useState, useMemo, useEffect} from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import { useSelector } from 'react-redux'
@@ -21,11 +21,38 @@ const Month = () => {
     // 获取账单列表
     const { billList } = billState
 
-    const newBillList = useMemo(() => _.groupBy(billList, (bill) => dayjs(bill.date).format("YYYY | M")) , [billList])
+    // 以月份分组的账单列表
+    const monthGroup = useMemo(() => _.groupBy(billList, (bill) => dayjs(bill.date).format("YYYY | M")) , [billList])
+
+    // 当前月的账单列表
+    const [currentMonthBillList, setCurrentMonthBillList] = useState([])
+
+    // 组件挂载时调用
+    // useEffect(() => {
+    //     // 当前月的账单列表的默认值
+    //     setCurrentMonthBillList(monthGroup[date])
+    // }, [monthGroup, date])
+
+    // 当前月的支出、收入、结余
+    const { pay, income, balances } = useMemo(() => {
+        // 支出
+        const pay = currentMonthBillList.filter(bill => bill.type === 'pay').reduce((sum, bill) => sum + bill.money, 0)
+        // 收入
+        const income = currentMonthBillList.filter(bill => bill.type === 'income').reduce((sum, bill) => sum + bill.money, 0)
+        // 结余
+        const balances = pay + income
+        return {
+            pay,
+            income,
+            balances
+        }
+    }, [currentMonthBillList])
 
     // 选择日期
     const selectDate = (value) => {
         const selectedDate = dayjs(value).format("YYYY | M")
+        // 获取当前月的账单列表
+        setCurrentMonthBillList(monthGroup[selectedDate])
         // 修改账单日期
         setDate(selectedDate)
         // 关闭弹窗
@@ -49,15 +76,15 @@ const Month = () => {
                     {/* 统计区域 */}
                     <div className='twoLineOverview'>
                         <div className="item">
-                            <span className="money">{100}</span>
+                            <span className="money">{pay.toFixed(2)}</span>
                             <span className="type">支出</span>
                         </div>
                         <div className="item">
-                            <span className="money">{200}</span>
+                            <span className="money">{income.toFixed(2)}</span>
                             <span className="type">收入</span>
                         </div>
                         <div className="item">
-                            <span className="money">{200}</span>
+                            <span className="money">{balances.toFixed(2)}</span>
                             <span className="type">结余</span>
                         </div>
                     </div>
