@@ -13,8 +13,8 @@ import './index.scss'
 const Month = () => {
     // 展示日期选择器的标记
     const [isShowDatePicker, setIsShowDatePicker] = useState(false)
-    // 当前年份
-    const [date, setDate] = useState(() => dayjs().format("YYYY | M"))
+    // 当前日期
+    const [date, setDate] = useState(() => dayjs().format("YYYY - MM "))
     // 获取 billStore 的状态管理库
     const billState = useSelector(state => state.billState)
 
@@ -22,16 +22,18 @@ const Month = () => {
     const { billList } = billState
 
     // 以月份分组的账单列表
-    const monthGroup = useMemo(() => _.groupBy(billList, (bill) => dayjs(bill.date).format("YYYY | M")) , [billList])
+    const monthGroup = useMemo(() => _.groupBy(billList, (bill) => dayjs(bill.date).format("YYYY - MM ")) , [billList])
 
     // 当前月的账单列表
     const [currentMonthBillList, setCurrentMonthBillList] = useState([])
 
     // 组件挂载时调用
-    // useEffect(() => {
-    //     // 当前月的账单列表的默认值
-    //     setCurrentMonthBillList(monthGroup[date])
-    // }, [monthGroup, date])
+    useEffect(() => {
+        if (monthGroup[date]) {
+            // 当前月的账单列表的默认值
+            setCurrentMonthBillList(monthGroup[date])
+        }
+    }, [monthGroup])
 
     // 当前月的支出、收入、结余
     const { pay, income, balances } = useMemo(() => {
@@ -50,7 +52,7 @@ const Month = () => {
 
     // 选择日期
     const selectDate = (value) => {
-        const selectedDate = dayjs(value).format("YYYY | M")
+        const selectedDate = dayjs(value).format("YYYY - MM ")
         // 获取当前月的账单列表
         setCurrentMonthBillList(monthGroup[selectedDate])
         // 修改账单日期
@@ -76,16 +78,16 @@ const Month = () => {
                     {/* 统计区域 */}
                     <div className='twoLineOverview'>
                         <div className="item">
-                            <span className="money">{pay.toFixed(2)}</span>
                             <span className="type">支出</span>
+                            <span className="money">{pay.toFixed(2)}</span>
                         </div>
                         <div className="item">
-                            <span className="money">{income.toFixed(2)}</span>
                             <span className="type">收入</span>
+                            <span className="money">{income.toFixed(2)}</span>
                         </div>
                         <div className="item">
-                            <span className="money">{balances.toFixed(2)}</span>
                             <span className="type">结余</span>
+                            <span className="money">{balances.toFixed(2)}</span>
                         </div>
                     </div>
                     {/* 时间选择器 */}
