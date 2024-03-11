@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import {  TabBar } from 'antd-mobile'
 import {
@@ -13,8 +13,6 @@ import { getBillList } from '@/store/modules/billStore'
 import './index.scss'
 
 const Layout = () => {
-    // 获取 billState
-    const billState = useSelector(state => state.billState)
     // 获取 提交对象 dispatch
     const dispatch = useDispatch()
     // 获取路由跳转对象
