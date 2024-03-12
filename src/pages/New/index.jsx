@@ -23,9 +23,23 @@ const New = () => {
     // 账单图标类型
     const [useFor, setUseFor] = useState()
 
+    // 控制日期选择器显隐的标记
+    const [isShowDatePicker, setIsShowDatePicker] = useState(false)
+
+    // 账单记录日期
+    const [date, setDate] = useState()
+
     // 保存账单金额
     const saveMoney = (value) => {
         setMoney(+value)
+    }
+
+    // 保存账单记录日期
+    const saveDate = (value) => {
+        // 保存日期
+        setDate(value)
+        // 关闭选择器
+        setIsShowDatePicker(false)
     }
 
     // 新增账单
@@ -33,7 +47,7 @@ const New = () => {
         dispatch(insertBillList({
             type: billType,
             money: billType === 'pay' ? -money : money,
-            date: dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+            date: dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
             useFor
         }))
         // 路由跳转
@@ -68,11 +82,19 @@ const New = () => {
                     <div className="kaForm">
                         <div className="date">
                             <BillTypeIcon type="calendar" className="icon" />
-                            <span className="text">{'今天'}</span>
+                            <span className="text" onClick={() => setIsShowDatePicker(true)}>
+                                {
+                                    dayjs(date).format("YYYY 年 MM 月 DD 日")
+                                }
+                            </span>
                             <DatePicker
                                 className="kaDate"
                                 title="记账日期"
                                 max={new Date()}
+                                visible={isShowDatePicker}
+                                onCancle={() => setIsShowDatePicker(false)}
+                                onConfirm={saveDate}
+                                onClose={() => setIsShowDatePicker(false)}
                             />
                         </div>
                         <div className="kaInput">
