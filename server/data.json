@@ -43,41 +43,6 @@
       "id": "6"
     },
     {
-      "type": "income",
-      "money": 10000,
-      "date": "2024-03-20T06:45:54.004Z",
-      "useFor": "salary",
-      "id": "7"
-    },
-    {
-      "type": "pay",
-      "money": -10,
-      "date": "2024-03-22T07:17:12.531Z",
-      "useFor": "drinks",
-      "id": "8"
-    },
-    {
-      "type": "pay",
-      "money": -20,
-      "date": "2024-04-22T07:51:20.421Z",
-      "useFor": "dessert",
-      "id": "9"
-    },
-    {
-      "type": "pay",
-      "money": -100,
-      "date": "2024-03-22T09:18:12.898Z",
-      "useFor": "drinks",
-      "id": "17"
-    },
-    {
-      "type": "pay",
-      "money": -50,
-      "date": "2024-03-23T09:11:23.312Z",
-      "useFor": "food",
-      "id": "18"
-    },
-    {
       "type": "pay",
       "money": -10,
       "date": "2024-03-03T11:14:56.036Z",
@@ -90,6 +55,55 @@
       "money": -99999,
       "date": "2024-03-08T08:40:58.454Z",
       "useFor": "drinks"
+    },
+    {
+      "id": "a557",
+      "type": "pay",
+      "money": 1000,
+      "date": "2024-03-12T00:48:47.512Z",
+      "useFor": "dessert"
+    },
+    {
+      "id": "97fc",
+      "type": "pay",
+      "money": 120,
+      "date": "2024-03-12T00:50:20.163Z",
+      "useFor": "drinks"
+    },
+    {
+      "id": "24fb",
+      "type": "pay",
+      "money": 200,
+      "date": "2024-03-12T00:51:10.119Z",
+      "useFor": "taxi"
+    },
+    {
+      "id": "701c",
+      "type": "pay",
+      "money": 560,
+      "date": "2024-03-12T00:52:16.471Z",
+      "useFor": "travel"
+    },
+    {
+      "id": "50e6",
+      "type": "pay",
+      "money": 5000,
+      "date": "2024-03-12T00:54:37.110Z",
+      "useFor": "promote"
+    },
+    {
+      "id": "f4ea",
+      "type": "pay",
+      "money": -12,
+      "date": "2024-03-12T01:06:11.874Z",
+      "useFor": "travel"
+    },
+    {
+      "id": "03fe",
+      "type": "pay",
+      "money": -123,
+      "date": "2024-03-12 09:12:25",
+      "useFor": "longdistance"
     }
   ]
 }
